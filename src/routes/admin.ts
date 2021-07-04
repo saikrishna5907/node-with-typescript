@@ -17,15 +17,25 @@ router.post('/product', (req: Request, res: Response, next: NextFunction) => {
 
   }).catch(err => {
     console.error(err);
+  });
 
-  })
 });
 
 
-router.get('/product', (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.body);
-
-  res.redirect('/')
+router.get('/products', (req: Request, res: Response, next: NextFunction) => {
+  Product.findAll().then(result => {
+    res.send(result);
+  })
+    .catch(err => {
+      console.error(err);
+    });
+});
+router.get('/products/:id', (req: Request, res: Response, next: NextFunction) => {
+  Product.findByPk(req.params.id).then(result => {
+    res.status(200).send(result)
+  }).catch(err => {
+    res.status(500).send(err)
+  })
 })
 
 export default router;
