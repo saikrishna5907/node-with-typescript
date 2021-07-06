@@ -1,7 +1,10 @@
-import { IProduct, IProductWithID } from "./Iproduct.interface";
-import MongoDbConnect from "../utilities/database";
 import mongodb from 'mongodb';
-class Product implements IProduct { // BaseCrud<Product>
+import { Service } from 'typedi';
+import { IProduct } from '../../products/Iproduct.interface';
+import MongoDbConnect from '../../utilities/database';
+
+@Service()
+class Product implements IProduct, BaseService<Product> {
   title: string;
   imageUrl: string;
   description: string;
@@ -12,14 +15,11 @@ class Product implements IProduct { // BaseCrud<Product>
     this.description = product.description;
     this.price = product.price;
   }
-  // private getBaseCrudObj(): BaseCrud<Product> {
-  //   return new BaseCrud<Product>();
-  // }
   public async save(): Promise<void> {
     const dbInstance = await MongoDbConnect.getDbInstance();
     const insertResult = await dbInstance.collection('products').insertOne(this);
     console.log(insertResult);
-    // await this.getBaseCrudObj().save(this);
+    await this.getBaseCrudObj().save(this);
   }
   public static async findAll(): Promise<Product[]> {
     const dbInstance = await MongoDbConnect.getDbInstance();
@@ -50,31 +50,5 @@ class Product implements IProduct { // BaseCrud<Product>
       throw new Error(error);
     }
   }
-  // public setTitle(title: string) {
-  //   this.title = title;
-  // }
-  // public setImageUrl(imageUrl: string) {
-  //   this.imageUrl = imageUrl;
-  // }
-  // public setPrice(price: number) {
-  //   this.price = price;
-  // }
-  // public setDescription(description: string) {
-  //   this.description = description;
-  // }
-
-  // public getTitle(): string {
-  //   return this.title;
-  // }
-
-  // public getPrice(): number {
-  //   return this.price;
-  // }
-  // public getImageUrl(): string {
-  //   return this.imageUrl;
-  // }
-  // public getDescription(): string {
-  //   return this.description;
-  // }
 }
 export default Product;
