@@ -1,25 +1,15 @@
 import mongodb from 'mongodb';
-import { Service } from 'typedi';
-import { IProduct } from '../../products/Iproduct.interface';
-import MongoDbConnect from '../../utilities/database';
+import { IProductWithID } from '../../models/product/Iproduct.interface';
+import MongoDbConnect from '../../config/database';
+import { Product } from '../../models/product/product';
+import { ProductService } from '../../services/Product/product.service';
 
-@Service()
-class Product implements IProduct, BaseService<Product> {
-  title: string;
-  imageUrl: string;
-  description: string;
-  price: number;
-  constructor(product: IProduct) {
-    this.title = product.title;
-    this.imageUrl = product.imageUrl;
-    this.description = product.description;
-    this.price = product.price;
-  }
-  public async save(): Promise<void> {
-    const dbInstance = await MongoDbConnect.getDbInstance();
-    const insertResult = await dbInstance.collection('products').insertOne(this);
-    console.log(insertResult);
-    await this.getBaseCrudObj().save(this);
+export class ProductController {
+  constructor(private readonly _productsService: ProductService) { }
+
+
+  public async save(product: Product): Promise<void> {
+    await this._productsService.save(product);
   }
   public static async findAll(): Promise<Product[]> {
     const dbInstance = await MongoDbConnect.getDbInstance();

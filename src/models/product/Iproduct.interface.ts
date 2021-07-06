@@ -3,7 +3,6 @@ export interface IProduct {
   imageUrl: string,
   price: number,
   description: string,
-  save: () => {}
 }
 
 export interface IProductWithID extends IProduct {

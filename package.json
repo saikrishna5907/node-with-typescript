@@ -13,6 +13,12 @@
   "devDependencies": {
     "@types/mysql": "^2.15.18",
     "@types/node": "^15.14.0",
+    "@types/cors": "^2.8.10",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.12",
+    "@types/helmet": "^4.0.0",
+    "@types/mongodb": "^3.6.19",
+    "@types/mongoose": "^5.11.97",
     "nodemon": "^2.0.9",
     "ts-node": "^10.0.0",
     "ts-node-dev": "^1.1.8",
@@ -20,22 +26,15 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@types/cors": "^2.8.10",
-    "@types/dotenv": "^8.2.0",
-    "@types/express": "^4.17.12",
-    "@types/helmet": "^4.0.0",
-    "@types/mongodb": "^3.6.19",
-    "@types/mongoose": "^5.11.97",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
+    "inversify": "^5.1.1",
+    "inversify-express-utils": "^6.3.2",
     "mongodb": "^3.6.9",
     "mongoose": "^5.13.2",
-    "mysql2": "^2.2.5",
-    "reflect-metadata": "^0.1.13",
-    "sequelize": "^6.6.4",
-    "typedi": "^0.10.0"
+    "reflect-metadata": "^0.1.13"
   }
 }
