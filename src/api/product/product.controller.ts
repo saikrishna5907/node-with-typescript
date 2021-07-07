@@ -2,19 +2,25 @@ import mongodb from 'mongodb';
 import { IProductWithID } from '../../models/product/Iproduct.interface';
 import MongoDbConnect from '../../config/database';
 import { Product } from '../../models/product/product';
+import { controller, httpGet, httpPost, request, response } from 'inversify-express-utils';
+import { inject } from 'inversify';
+import TYPES from '../../config/inversify-di/di-types';
+import { Request, Response } from 'express';
 import { ProductService } from '../../services/Product/product.service';
-
+@controller('/products')
 export class ProductController {
-  constructor(private readonly _productsService: ProductService) { }
+  constructor(@inject(TYPES.ProductService) private productService: ProductService) { }
 
-
+  @httpPost('/')
   public async save(product: Product): Promise<void> {
-    await this._productsService.save(product);
+    await this.productService.save(product);
   }
-  public static async findAll(): Promise<Product[]> {
+  @httpGet('/')
+  public static async findAllProducts(@request() req: Request, @response() res: Response): Promise<void> {
     const dbInstance = await MongoDbConnect.getDbInstance();
     try {
-      return await dbInstance.collection('products').find().toArray();
+      const productsResponse = await dbInstance.collection('products').find().toArray();
+      res.status(200).json(productsResponse);
     } catch (error: any) {
       throw new Error(error);
     }

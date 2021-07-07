@@ -1,18 +1,15 @@
 import 'reflect-metadata';
-import express from 'express';
 import MongoDbConnect from './config/database';
-import indexRouter from './routes/index.route';
-import { Container } from 'inversify';
 import { InversifyExpressServer } from 'inversify-express-utils';
-
+import { DIContainer } from './config/inversify-di/di-container';
+import './api/index.controller';
 const bodyParser = require('body-parser');
-const container = new Container();
-const app = express();
+
+const diContainer = new DIContainer().diContainer;
+const app = new InversifyExpressServer(diContainer, undefined, { rootPath: '/api' }).build();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-app.use('api/', indexRouter);
 
 
 MongoDbConnect.getDbInstance().then((client) => {

@@ -1,10 +1,18 @@
+import { inject, injectable } from "inversify";
+import TYPES from "../../config/inversify-di/di-types";
+import { IProductService } from "../../models/product/Iproduct-service.interface";
 import { Product } from "../../models/product/product";
 import { ProductRepository } from "../../Repositories/Product.repository";
 
-export class ProductService {
-  constructor(private readonly _productRepo: ProductRepository) {
+@injectable()
+export class ProductService implements IProductService {
+  constructor(@inject(TYPES.ProductRepository) private readonly _productRepo: ProductRepository) {
 
   }
+  getAllProductsInAnOrder = (): Promise<Product> => {
+    return this._productRepo.getAllProductsInAnOrder();
+  };
+
 
   public save = async (product: Product): Promise<void> => {
     if (!product) {
