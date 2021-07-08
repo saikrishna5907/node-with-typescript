@@ -20,5 +20,8 @@ export class ProductService implements IProductService {
     }
     await this._productRepo.save(product);
   }
+  public getAll = async (): Promise<any> => {
+    return await this._productRepo.getAll();
+  };
 
 }

@@ -1,4 +1,4 @@
-import MongoDbConnect from "../config/database";
+import MongoDbConnect from "../config/mongoDB/database";
 import { IProductRepository } from "./repository-interfaces/IProductRepository.interface";
 import mongodb from 'mongodb';
 import { Product } from "../models/product/product";
@@ -16,6 +16,11 @@ export class ProductRepository implements IProductRepository {
   public save = async (product: Product) => {
     const dbInstance = await MongoDbConnect.getDbInstance();
     const insertResult = await dbInstance.collection('products').insertOne(product);
+  };
+
+  public getAll = async (): Promise<Product[] | any> => {
+    const dbInstance = await MongoDbConnect.getDbInstance();
+    return dbInstance.collection('products').find();
   };
 
 }

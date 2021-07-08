@@ -1,6 +1,6 @@
 const productTypes = {
-  ProductService: Symbol('ProductService'),
-  ProductRepository: Symbol('ProductRepository')
+  ProductService: Symbol.for('ProductService'),
+  ProductRepository: Symbol.for('ProductRepository')
 }
 
 const TYPES = {

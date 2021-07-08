@@ -1,5 +1,6 @@
 import { Product } from "../../models/product/product";
 
-export interface IBaseRepository {
-  save: (product: Product) => {}
+export interface IBaseRepository<T> {
+  save: (entity: T) => {}
+  getAll: () => Promise<T[] | any>
 }

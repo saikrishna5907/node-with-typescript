@@ -1,4 +1,4 @@
-import MongoDbConnect from "../../config/database";
+import MongoDbConnect from "../../config/mongoDB/database";
 import { IBaseService } from "./base.service.interface";
 
 export class BaseService<T> implements IBaseService<T> {
