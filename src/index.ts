@@ -5,7 +5,7 @@ import { DIContainer } from './config/inversify-di/di-container';
 import morgan from 'morgan';
 import './api/index.controller'
 import { Application } from 'express';
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser';
 
 const diContainer = new DIContainer().diContainer;
 const server = new InversifyExpressServer(diContainer);
@@ -30,6 +30,7 @@ const app = server.build();
 
 
 MongoDbConnect.getDbInstance().then((client) => {
+	console.log(client);
 	app.listen(3000, () => {
 		console.log('Listening on Port 3000...!');
 	});

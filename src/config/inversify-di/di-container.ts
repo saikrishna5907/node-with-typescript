@@ -1,5 +1,5 @@
 import { Container } from "inversify";
-import { ProductRepository } from "../../Repositories/Product.repository";
+import { ProductRepository } from "../../Repositories/product.repository";
 import { ProductService } from "../../services/Product/product.service";
 import TYPES from "./di-types";
 

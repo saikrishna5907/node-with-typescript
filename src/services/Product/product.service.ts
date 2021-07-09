@@ -2,7 +2,7 @@ import { inject, injectable } from "inversify";
 import TYPES from "../../config/inversify-di/di-types";
 import { IProductService } from "../../models/product/Iproduct-service.interface";
 import { Product } from "../../models/product/product";
-import { ProductRepository } from "../../Repositories/Product.repository";
+import { ProductRepository } from "../../Repositories/product.repository";
 
 @injectable()
 export class ProductService implements IProductService {

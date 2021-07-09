@@ -1,5 +1,22 @@
 import { injectable } from "inversify";
 import { IProduct } from "./Iproduct.interface";
+import mongoose from 'mongoose';
+
+const Schema = mongoose.Schema;
+
+const productSchema = new Schema({
+  title: {
+    type: String,
+    required: true
+  },
+  imageUrl: {
+    type: String,
+  },
+  description: String,
+  price: Number
+}, {
+  timestamps: true
+});
 @injectable()
 export class Product implements IProduct {
   _id?: string
@@ -15,3 +32,5 @@ export class Product implements IProduct {
     this.price = product.price;
   }
 }
+
+module.exports = mongoose.model('Product', productSchema);
