@@ -1,30 +1,17 @@
 import MongoDbConnect from "../config/mongoDB/database";
 import { IProductRepository } from "./repository-interfaces/IProductRepository.interface";
-import { Product } from "../models/product/product";
-import { injectable } from "inversify";
+import { Product, ProductDocument, ProductModel } from "../models/product/product";
+import { inject, injectable } from "inversify";
 import { BaseRespository } from "./base-repository";
-import { IProduct } from "../models/product/Iproduct.interface";
+import productSchema from '../models/product/product';
 @injectable()
-export class ProductRepository extends BaseRespository<Product> implements IProductRepository {
-
-
-  public getAllProductsInAnOrder = async (): Promise<Product> => {
-    const dbInstance = await MongoDbConnect.getDbInstance();
-    return new Product({} as IProduct);
+export class ProductRepository extends BaseRespository<ProductDocument> implements IProductRepository {
+  constructor() {
+    super(productSchema)
+  }
+  public getAllProductsInAnOrder = async (): Promise<ProductDocument> => {
+    return {} as ProductDocument;
     // for now the logic is just returning one products
     // return await dbInstance.collection('products').findOne({ _id: new mongodb.ObjectID('some id') });
   };
-
-
-  public save = async (product: Product) => {
-    const dbInstance = await MongoDbConnect.getDbInstance();
-
-    // const insertResult = await dbInstance.collection('products').insertOne(product);
-  };
-
-  public getAll = async (): Promise<Product[] | any> => {
-    const dbInstance = await MongoDbConnect.getDbInstance();
-    // return dbInstance.collection('products').find();
-  };
-
 }

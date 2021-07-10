@@ -30,7 +30,6 @@ const app = server.build();
 
 
 MongoDbConnect.getDbInstance().then((client) => {
-	console.log(client);
 	app.listen(3000, () => {
 		console.log('Listening on Port 3000...!');
 	});

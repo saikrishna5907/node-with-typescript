@@ -1,6 +1,7 @@
-import { Product } from "../../models/product/product";
+import { EnforceDocument } from "mongoose";
 
 export interface IBaseRepository<T> {
-  save: (entity: T) => {}
-  getAll: () => Promise<T[] | any>
+  create: (item: T) => Promise<EnforceDocument<T, {}>>
+  getAll: () => Promise<T[]>
+  getById: (id: string) => Promise<T>
 }
