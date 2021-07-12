@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { inject } from "inversify";
-import { controller, httpGet, httpPost, request, requestBody, requestParam, response } from "inversify-express-utils";
+import { controller, httpGet, httpPatch, httpPost, httpPut, request, requestBody, requestParam, response } from "inversify-express-utils";
 import TYPES from "../../config/inversify-di/di-types";
+import { UpdateProductDTO } from "../../DTO/update-product.dto";
 import { ProductDocument } from "../../models/product/product";
 import { ProductService } from "../../services/Product/product.service";
 
@@ -21,5 +22,9 @@ export class ProductController {
   @httpGet('/:id')
   public async getProductById(@requestParam("id") id: string, @response() res: Response) {
     return await this.productService.getById(id);
+  }
+  @httpPut('/')
+  public async updateProduct(@requestBody() product: UpdateProductDTO, @response() res: Response) {
+    return await this.productService.updateProduct(product);
   }
 }

@@ -1,8 +1,5 @@
-import { inject, injectable, named } from "inversify";
-import { EnforceDocument } from "mongoose";
-import { INVERSIFY_TYPES } from "../../config/inversify-di/di-types";
-import { BaseRespository } from "../../Repositories/base-repository";
-import { ProductRepository } from "../../Repositories/product.repository";
+import { injectable } from "inversify";
+import { EnforceDocument, Document } from "mongoose";
 import { IBaseRepository } from "../../Repositories/repository-interfaces/IBaseRepository.internface";
 import { IBaseService } from "./base.service.interface";
 
@@ -10,7 +7,7 @@ import { IBaseService } from "./base.service.interface";
 // R is the repository to use
 // I is the inversify TYPES we defined
 @injectable()
-export class BaseService<T> implements IBaseService<T> {
+export class BaseService<T extends Document> implements IBaseService<T> {
   private readonly repository: IBaseRepository<T>
   constructor(repo: IBaseRepository<T>) {
     this.repository = repo;
@@ -30,5 +27,20 @@ export class BaseService<T> implements IBaseService<T> {
   public getAll = async (): Promise<T[]> => {
     return await this.repository.getAll();
   };
+  public update = async (item: T): Promise<T> => {
+    try {
+      if (!item) {
+        throw new Error('Product is required to Update...!');
+      }
+      if (!item._id) {
+        throw new Error('Id Not found');
+      }
 
+      return await this.repository.update(item);
+    } catch (err) {
+      console.log('-----------Update Failed------------');
+      throw new Error(err);
+    }
+
+  };
 }

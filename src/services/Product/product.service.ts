@@ -1,5 +1,6 @@
 import { inject, injectable, named } from "inversify";
 import { INVERSIFY_TYPES } from "../../config/inversify-di/di-types";
+import { UpdateProductDTO } from "../../DTO/update-product.dto";
 import { IProductService } from "../../models/product/Iproduct-service.interface";
 import { ProductDocument } from "../../models/product/product";
 
@@ -12,24 +13,26 @@ export class ProductService extends BaseService<ProductDocument> implements IPro
   constructor(@inject(INVERSIFY_TYPES.ProductRepository) private readonly _productRepo: ProductRepository) {
     super(_productRepo)
   }
-  // public getById = async (id: string): Promise<ProductDocument> => {
-  //   if (!id) {
-  //     throw new Error('ID is not found to find Product');
-  //   }
-  //   return await this._productRepo.getById(id);
-  // };
   public getAllProductsInAnOrder = (): Promise<ProductDocument> => {
     return this._productRepo.getAllProductsInAnOrder();
   };
-  // public create = async (product: ProductDocument): Promise<ProductDocument> => {
-  //   if (!product) {
-  //     throw new Error('Product is required...!');
-  //   }
-  //   return await this._productRepo.create(product);
-  // };
-  // public getAll = async (): Promise<ProductDocument[]> => {
-  //   return await this._productRepo.getAll();
-  // };
-
+  public updateProduct = async (item: UpdateProductDTO): Promise<ProductDocument> => {
+    try {
+      const product = await this._productRepo.getById(item._id);
+      if (!product) {
+        throw new Error('Updating Product Not Found...!');
+      }
+      product.description = item.description;
+      product.displayName = item.displayName;
+      product.productName = item.productName;
+      product.stockOnhand = item.stockOnhand;
+      product.imageUrl = item.imageUrl;
+      product.price = item.price;
+      product.status = item.status;
+      return this._productRepo.update(product);
+    } catch (err) {
+      throw err(err);
+    }
+  };
 
 }

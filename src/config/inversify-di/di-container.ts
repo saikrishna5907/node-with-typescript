@@ -1,4 +1,5 @@
 import { Container } from "inversify";
+import { ProductDocument } from "../../models/product/product";
 import { BaseRespository } from "../../Repositories/base-repository";
 import { ProductRepository } from "../../Repositories/product.repository";
 import { ProductService } from "../../services/Product/product.service";
@@ -31,6 +32,6 @@ export class DIContainer {
   // }
   //  this is to map or specificy which repository class should base repository's injection should use
   private configureBaseRepositoryMappings(): void {
-    this.diContainer.bind<BaseRespository<ProductRepository>>(INVERSIFY_TYPES.BaseRespository).to(BaseRespository).whenTargetNamed(INVERSIFY_TYPES.ProductRepository);
+    this.diContainer.bind<BaseRespository<ProductDocument>>(INVERSIFY_TYPES.BaseRespository).to(BaseRespository).whenTargetNamed(INVERSIFY_TYPES.ProductRepository);
   }
 }
