@@ -1,6 +1,6 @@
 import { injectable, unmanaged } from "inversify";
 import { EnforceDocument, Model, Types, Document } from "mongoose";
-import { IBaseRepository } from "./repository-interfaces/IBaseRepository.internface";
+import { IBaseRepository } from "../../../domain/Interfaces/repository-interfaces/IBaseRepository.internface";
 
 @injectable()
 export class BaseRespository<T extends Document> implements IBaseRepository<T> {

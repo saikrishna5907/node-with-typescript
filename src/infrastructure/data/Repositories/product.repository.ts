@@ -1,8 +1,8 @@
-import { ProductDocument } from "../models/product/product";
+import { ProductDocument } from "../../../domain/models/product/product";
 import { injectable } from "inversify";
 import { BaseRespository } from "./base-repository";
-import productSchema from '../models/product/product';
-import { IProductRepository } from "./repository-interfaces/IProductRepository.interface";
+import productSchema from '../../../domain/models/product/product';
+import { IProductRepository } from "../../../domain/Interfaces/repository-interfaces/IProductRepository.interface";
 @injectable()
 export class ProductRepository extends BaseRespository<ProductDocument> implements IProductRepository {
   constructor() {

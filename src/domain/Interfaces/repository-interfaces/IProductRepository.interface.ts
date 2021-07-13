@@ -1,4 +1,4 @@
-import { Product, ProductDocument } from "../../models/product/product";
+import { ProductDocument } from "../../models/product/product";
 import { IBaseRepository } from "./IBaseRepository.internface";
 
 export interface IProductRepository extends IBaseRepository<ProductDocument> {

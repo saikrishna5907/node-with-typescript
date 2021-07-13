@@ -1,15 +1,19 @@
 const productTypes = {
   ProductService: Symbol.for('ProductService'),
   ProductRepository: Symbol.for('ProductRepository'),
-  ProductDocumentSchema: Symbol.for('ProductDocumentSchema')
 }
 const base = {
   BaseRespository: Symbol.for('BaseRespository')
 }
+const kitProductTypes = {
+  KitProductRepository: Symbol.for('KitProductRepository'),
+  KitProductService: Symbol.for('KitProductService'),
+}
 
 export const INVERSIFY_TYPES = {
+  ...base,
   ...productTypes,
-  ...base
+  ...kitProductTypes
 };
 
 export default INVERSIFY_TYPES;

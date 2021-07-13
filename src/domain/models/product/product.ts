@@ -1,9 +1,6 @@
 import { Schema, Document, model, Types, Model } from 'mongoose';
+import { KitProductDocument } from '../kitProduct/kit-product.model';
 
-export interface KitProduct extends Document {
-  parentProductId: Types.ObjectId,
-  productComponents: Types.Array<Types.ObjectId>
-}
 export interface Product {
   createdByFirstName: string;
   createdByLastName: string;
@@ -21,27 +18,30 @@ export interface Product {
 // this interface will have the Product variables and also all the methods of mongoose Document,
 // the main purpose of this interface creation is to create new custom methods base on the business logic needs
 
-/**
- * Not directly exported because it is not recommanded to
- * use this interface direct unless necessary since the
- * type of `kitComponents` field is not deterministic
- */
+
 interface ProductBaseDocument extends Product, Document {
   getDisplayNameAndProductName(): string;
   createdByFullName: string;
 }
 
 // Export this for strong typing
+// tslint:disable-next-line:no-empty-interface
 export interface ProductDocument extends ProductBaseDocument {
-  kitComponents?: [KitProduct['_id']]
+  // kitComponents?: [KitProductDocument['_id']]
 }
+// tslint:disable-next-line:no-empty-interface
 export interface ProductPopulatedDocument extends ProductBaseDocument {
-  kitComponents: [KitProduct]
+  // kitComponents: [KitProductDocument]
 }
 
 // for Model
 export interface ProductModel extends Model<ProductDocument> {
   findKitsProducts(parentProductId: string): Promise<ProductPopulatedDocument>
+}
+
+enum ProductStatus {
+  Active = 1,
+  InActive = 0
 }
 
 const productSchema = new Schema<ProductDocument, ProductModel>({
@@ -74,13 +74,13 @@ const productSchema = new Schema<ProductDocument, ProductModel>({
     required: true
   },
   price: {
-    type: String,
-    required: Number
+    type: Number,
+    required: true
   },
   status: {
     type: Number,
-    enum: [0, 1],
-    default: [0],
+    enum: [ProductStatus.Active, ProductStatus.InActive],
+    default: [ProductStatus.InActive],
     required: true
   },
   kitComponents: {
@@ -91,15 +91,12 @@ const productSchema = new Schema<ProductDocument, ProductModel>({
   timestamps: true
 });
 
-enum ProductStatus {
-  Active = 1,
-  InActive = 0
-}
+
 productSchema.virtual("createdByFullName").get(function (this: ProductBaseDocument) {
   return this.createdByFirstName + ' ' + this.createdByLastName;
 })
 
-productSchema.statics.findKitProducts = async function (this: Model<ProductDocument>, id: string) {
-  return await this.findById(id).populate("kitComponents").exec();
-}
+// productSchema.statics.findKitProducts = async function (this: Model<ProductDocument>, id: string) {
+//   return await this.findById(id).populate("kitComponents").exec();
+// }
 export default model<ProductDocument, ProductModel>("Product", productSchema);

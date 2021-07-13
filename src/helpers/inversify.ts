@@ -1,5 +1,5 @@
 import INVERSIFY_TYPES from "../config/inversify-di/di-types";
-import { ProductRepository } from "../Repositories/product.repository"
+import { ProductRepository } from "../infrastructure/data/Repositories/product.repository"
 
 export const getSymbolBasedOnRepoType = <T>(genericRepo: T): symbol => {
   const availableRepos = [ProductRepository];
