@@ -32,7 +32,7 @@ export class DIContainer {
     this.diContainer.bind<ProductService>(INVERSIFY_TYPES.ProductService).to(ProductService).inSingletonScope();
     this.diContainer.bind<KitProductService>(INVERSIFY_TYPES.KitProductService).to(KitProductService).inSingletonScope();
   }
-  //  this is to map or specificy which repository class should base repository's injection should use which is not working at the moment
+  //  this is to map or specify which repository class should base repository's injection should use which is not working at the moment
   private configureBaseRepositoryMappings(): void {
     this.diContainer.bind<BaseRespository<ProductDocument>>(INVERSIFY_TYPES.BaseRespository).to(BaseRespository).whenTargetNamed(INVERSIFY_TYPES.ProductRepository);
   }

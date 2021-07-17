@@ -11,6 +11,9 @@ export class BaseRespository<T extends Document> implements IBaseRepository<T> {
   }
 
   public getById = async (id: string): Promise<EnforceDocument<T, {}>> => {
+    if (!id) {
+      throw new Error('No Id provided to get document...!');
+    }
     try {
       const responseFromDB = await this.mongooseModel.findById(new Types.ObjectId(id));
       if (responseFromDB) {

@@ -5,6 +5,7 @@ import { ProductDocument } from "../product/product";
 export interface KitProduct {
   kitName: string,
   kitPrice: number;
+  isActive: boolean;
 }
 /**
  * Not directly exported because it is not recommanded to
@@ -15,7 +16,7 @@ interface KitProductBaseDocument extends KitProduct, Document {
 
 }
 export interface KitProductDocument extends KitProductBaseDocument {
-  productComponents: [ProductDocument['_id']]
+  productComponents: ProductDocument['_id'][]
 }
 export interface KitProductPopulatedDocument extends KitProductDocument {
   productComponents: [ProductDocument]
@@ -24,9 +25,9 @@ export interface KitProductPopulatedDocument extends KitProductDocument {
 export interface KitProductModel extends Model<KitProductDocument> {
   findProductComponents(parentProductId: string): Promise<KitProductPopulatedDocument[]>
 }
-enum ProductStatus {
-  Active = 1,
-  InActive = 0
+export enum KitProductStatus {
+  Active = "1",
+  InActive = "0"
 }
 const kitProductSchema = new Schema<KitProductDocument, KitProductModel>({
   kitName: {
@@ -34,16 +35,19 @@ const kitProductSchema = new Schema<KitProductDocument, KitProductModel>({
     required: true,
     unique: true,
   },
-  status: {
-    type: Number,
-    enum: [ProductStatus.Active, ProductStatus.InActive],
-    default: [ProductStatus.InActive],
+  isActive: {
+    type: Boolean,
+    default: true,
     required: true
   },
   productComponents: {
     type: [Types.ObjectId],
     ref: 'productDocument',
     validate: (product: [Types.ObjectId]) => Array.isArray(product) && product.length > 0,
+  },
+  kitPrice: {
+    type: Number,
+    required: true
   }
 }, {
   timestamps: true
