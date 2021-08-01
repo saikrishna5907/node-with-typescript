@@ -2,7 +2,6 @@ import { injectable } from "inversify";
 import { EnforceDocument, Document } from "mongoose";
 import { IBaseRepository } from "../../domain/Interfaces/repository-interfaces/IBaseRepository.internface";
 import { IBaseService } from "../../domain/Interfaces/service-interfaces/Ibase.service.interface";
-
 // T is the mongoose document
 // R is the repository to use
 // I is the inversify TYPES we defined

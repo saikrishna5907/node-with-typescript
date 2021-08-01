@@ -1,0 +1,13 @@
+{
+  "openapi" :  "3.0.3",
+  "info": {
+    "title": "Node Project",
+    "description": "Node project with best practises and design patterns", 
+    "version": "1.0.0",
+    "contact": {
+      "name": "Saikrishna Sangishetty ",
+      "email": "sangishetty.saikrishna@gmail.com  ",
+      "url": ""
+    }
+  }
+}

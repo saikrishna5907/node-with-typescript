@@ -45,15 +45,12 @@ export class KitProductService extends BaseService<KitProductDocument> implement
       } else {
         result = await this.kitProductRepo.removeProductComponentsFromKit(requestPayload)
       }
-      if (!result || result === null) {
+      if (!result) {
         throw new Error('Failed to delete the kit product components...!');
       }
       return result;
     } catch (error) {
       throw new Error(error);
-
     }
   }
-
-
 }

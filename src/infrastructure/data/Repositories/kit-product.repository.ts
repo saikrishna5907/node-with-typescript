@@ -24,10 +24,14 @@ export class KitProducRepository extends BaseRespository<KitProductDocument> imp
       throw new Error(error);
     }
   }
-  public addProductComponentsToKit = async (listOfIdsToRemove: any): Promise<KitProductDocument | null> => {
+  public addProductComponentsToKit = async (listOfIdsToAdd: AddRemoveKitProductsDTO): Promise<KitProductDocument | null> => {
     try {
-      const _id = getMongooseIds(listOfIdsToRemove.kitProductId) as Types.ObjectId;
-      const idsList = getMongooseIds(listOfIdsToRemove.listOfProductComponentIds) as Types.ObjectId[]
+      const _id = getMongooseIds(listOfIdsToAdd.kitProductId) as Types.ObjectId;
+
+      const idsList = getMongooseIds(listOfIdsToAdd.listOfProductComponentIds) as Types.ObjectId[];
+      if (!_id || !idsList) {
+        throw new Error('Id(s) given is invalid...!');
+      }
       return await kitProductSchema.findByIdAndUpdate({ _id },
         { $push: { productComponents: idsList } }, { new: true });
     } catch (error) {

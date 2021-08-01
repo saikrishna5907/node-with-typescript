@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { inject } from "inversify";
-import { controller, httpGet, httpPost, httpPut, request, requestBody, requestParam, response } from "inversify-express-utils";
+import { BaseHttpController, controller, httpGet, httpPost, httpPut, request, requestBody, requestParam, response } from "inversify-express-utils";
 import { INVERSIFY_TYPES } from "../../config/inversify-di/di-types";
 import { UpdateProductDTO } from "../../domain/DTO/product/update-product.dto";
 import { ProductDocument } from "../../domain/models/product/product";
 import { ProductService } from "../../services/product/product.service";
 
 @controller('/products')
-export class ProductController {
+export class ProductController extends BaseHttpController {
   @inject(INVERSIFY_TYPES.ProductService) private readonly productService!: ProductService
   @httpGet('/')
   public async getAllProducts(@request() req: Request, @response() res: Response) {

@@ -6,5 +6,5 @@ import { IBaseRepository } from "./IBaseRepository.internface";
 
 export interface IKitProductRepository extends IBaseRepository<KitProductDocument> {
   removeProductComponentsFromKit: (listOfIdsToRemove: AddRemoveKitProductsDTO) => Promise<EnforceDocument<KitProductDocument, {}> | null>;
-  addProductComponentsToKit: (listOfIdsToRemove: AddRemoveKitProductsDTO) => Promise<EnforceDocument<KitProductDocument, {}> | null>;
+  addProductComponentsToKit: (listOfIdsToAdd: AddRemoveKitProductsDTO) => Promise<EnforceDocument<KitProductDocument, {}> | null>;
 }
